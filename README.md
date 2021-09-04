@@ -2,7 +2,7 @@
 This web api is using framework Flask from python and database using MySQL
 
 ## What Inside this project
-This project result are based on [Mini Wallet Exersice](https://documenter.getpostman.com/view/8411283/SVfMSqA3?version=latest). The endpoint, header/body request, and responses are same as that instruction.
+This project result are based on [Mini Wallet Exercise](https://documenter.getpostman.com/view/8411283/SVfMSqA3?version=latest). The endpoint, header/body request, and responses are same as that instruction.
 
 ## Installation instructions
 1. Make sure you have python > 3.7 Installed on your machine. [Download Python](https://www.python.org/downloads/).
