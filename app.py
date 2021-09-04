@@ -39,6 +39,8 @@ def init_account():
                     })
             set_access_cookies(resp, access_token)
             return resp, 200
+        else:
+            return jsonify({'status': 'fail', 'data': {"user": "Failed to init user."}}), 400
     except:
         return jsonify({'status': 'fail', 'data': None}), 401
 
@@ -50,11 +52,13 @@ def activate_wallet():
         user_id = get_jwt_identity()
         user = UserService(engine).get_user_by_id(user_id)
         if user:
-            balance = WalletService(engine, None).activate_wallet(user_id)
+            balance = WalletService(engine).activate_wallet(user_id)
             return {"status": "success",
                     "data": {
                         "wallet": balance
                     }}, 200
+        else:
+            return jsonify({'status': 'fail', 'data': {"user": "User not found."}}), 400
     except:
         return jsonify({'status': 'fail', 'data': None}), 400
 
@@ -66,16 +70,15 @@ def my_wallet():
         user_id = get_jwt_identity()
         user = UserService(engine).get_user_by_id(user_id)
         if user:
-            data = {
-                'user_id': user_id
-            }
-            wallet_service = WalletService(engine, None)
+            wallet_service = WalletService(engine)
             my_wallet = wallet_service.my_wallet(user_id)
             if my_wallet:
                 return {"status": "success",
                         "data": {
                             "wallet": my_wallet
                         }}, 200
+        else:
+            return jsonify({'status': 'fail', 'data': {"user": "User not found."}}), 400
     except:
         return jsonify({'status': 'fail', 'data': None}), 400
 
@@ -91,13 +94,15 @@ def deposite():
         reference_id = request.form.get("reference_id")
         user = UserService(engine).get_user_by_id(user_id)
         if user:
-            wallet_service = WalletService(engine, None)
+            wallet_service = WalletService(engine)
             deposite = wallet_service.deposite(user_id, int(amount), reference_id)
             if deposite:
                 return {"status": "success",
                         "data": {
                             "deposite": deposite
                         }}, 200
+        else:
+            return jsonify({'status': 'fail', 'data': {"user": "User not found."}}), 400
     except:
         return jsonify({'status': 'fail', 'data': None}), 400
 
@@ -113,13 +118,15 @@ def withdrawals():
         reference_id = request.form.get("reference_id")
         user = UserService(engine).get_user_by_id(user_id)
         if user:
-            wallet_service = WalletService(engine, None)
+            wallet_service = WalletService(engine)
             deposite = wallet_service.withdrawals(user_id, int(amount), reference_id)
             if deposite:
                 return {"status": "success",
                         "data": {
                             "deposite": deposite
                         }}, 200
+        else:
+            return jsonify({'status': 'fail', 'data': {"user": "User not found."}}), 400
     except:
         return jsonify({'status': 'fail', 'data': None}), 400
 
@@ -131,11 +138,13 @@ def deactivate_wallet():
         user_id = get_jwt_identity()
         user = UserService(engine).get_user_by_id(user_id)
         if user:
-            balance = WalletService(engine, None).deactivate_wallet(user_id)
+            balance = WalletService(engine).deactivate_wallet(user_id)
             return {"status": "success",
                     "data": {
                         "wallet": balance
                     }}, 200
+        else:
+            return jsonify({'status': 'fail', 'data': {"user": "User not found."}}), 400
     except:
         return jsonify({'status': 'fail', 'data': None}), 400
 
